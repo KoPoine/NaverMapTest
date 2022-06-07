@@ -32,7 +32,10 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            apiList.getRequestSearchKeyword(inputKeyword).enqueue(object : Callback<JSONObject>{
+            val clientId = "Nn1NEDxOmKq1F9QTs0ZG"
+            val clientSecret = "NGdETq1gha"
+
+            apiList.getRequestSearchKeyword(clientId, clientSecret, "local", inputKeyword).enqueue(object : Callback<JSONObject>{
                 override fun onResponse(call: Call<JSONObject>, response: Response<JSONObject>) {
                     Log.d("json", response.toString())
                 }

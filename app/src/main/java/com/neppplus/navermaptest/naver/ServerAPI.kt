@@ -11,7 +11,7 @@ class ServerAPI {
     companion object {
 
         private var retrofit : Retrofit? = null
-        private val BASE_URL = "https://openapi.naver.com/v1/search/"
+        private val BASE_URL = "https://openapi.naver.com/v1/"
 
         fun getRetrofit(context : Context): Retrofit {
 
@@ -33,7 +33,7 @@ class ServerAPI {
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
                     .baseUrl(BASE_URL)
-                    .client(myClient)
+//                    .client(myClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
             }
