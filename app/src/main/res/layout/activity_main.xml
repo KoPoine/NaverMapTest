@@ -9,5 +9,23 @@
         android:padding="20dp"
         tools:context=".MainActivity">
 
+        <EditText
+            android:id="@+id/keywordEdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="검색할 장소명을 입력해주세요."/>
+
+        <Button
+            android:id="@+id/searchBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="검색"/>
+
+        <com.naver.maps.map.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"/>
+
     </LinearLayout>
 </layout>
