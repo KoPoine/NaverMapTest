@@ -18,6 +18,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="YOUR_CLIENT_ID_HERE" />
 
+        <meta-data
+            android:name="naverAPIClientID"
+            android:value="Nn1NEDxOmKq1F9QTs0ZG"/>
+
+        <meta-data
+            android:name="naverAPIClientSecret"
+            android:value="NGdETq1gha"/>
+    </application>
 </manifest>
