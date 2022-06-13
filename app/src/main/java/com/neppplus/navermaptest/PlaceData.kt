@@ -1,9 +1,11 @@
 package com.neppplus.navermaptest
 
-class PlaceData(
+import java.io.Serializable
+
+data class PlaceData(
     val title : String,
     val roadAddress : String,
     val mapx : Int,
     val mapy : Int
-) {
+) : Serializable {
 }

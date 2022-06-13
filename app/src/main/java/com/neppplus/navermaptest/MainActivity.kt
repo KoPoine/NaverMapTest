@@ -3,8 +3,10 @@ package com.neppplus.navermaptest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.naver.maps.map.MapView
 import com.neppplus.navermaptest.databinding.ActivityMainBinding
 import com.neppplus.navermaptest.naver.APIList
@@ -13,10 +15,13 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.net.URLEncoder
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityMainBinding
+    lateinit var mPlaceAdapter : PlaceRecyclerViewAdapter
+    var mPlaceList = ArrayList<PlaceData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +30,10 @@ class MainActivity : AppCompatActivity() {
         val retrofit = ServerAPI.getRetrofit(this)
         val apiList = retrofit.create(APIList::class.java)
 
+        mPlaceAdapter = PlaceRecyclerViewAdapter(this, mPlaceList)
+        binding.recyclerView.adapter = mPlaceAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+
         binding.searchBtn.setOnClickListener {
             val inputKeyword = binding.keywordEdt.text.toString()
             if (inputKeyword.length < 2) {
@@ -32,13 +41,23 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            apiList.getRequestSearchKeyword(inputKeyword).enqueue(object : Callback<JSONObject>{
-                override fun onResponse(call: Call<JSONObject>, response: Response<JSONObject>) {
+            val keyword = URLEncoder.encode(inputKeyword, "UTF-8")
+
+            apiList.getRequestSearchKeyword(inputKeyword, 5).enqueue(object : Callback<SearchResponse>{
+                override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
                     Log.d("json", response.toString())
+
+                    if (response.isSuccessful) {
+                        Log.d("성공", response.body().toString())
+
+                        mPlaceList.clear()
+                        mPlaceList.addAll(response.body()!!.items)
+                        mPlaceAdapter.notifyDataSetChanged()
+                    }
                 }
 
-                override fun onFailure(call: Call<JSONObject>, t: Throwable) {
-
+                override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
+                    Log.d("서버 실패", t.toString())
                 }
             })
         }
