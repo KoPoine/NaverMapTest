@@ -1,4 +1,4 @@
-package com.neppplus.navermaptest
+package com.neppplus.navermaptest.Models
 
 import java.io.Serializable
 

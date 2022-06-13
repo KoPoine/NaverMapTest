@@ -7,23 +7,22 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
-class ServerAPI {
-
+class NaverMapServerAPI {
     companion object {
 
         private var retrofit : Retrofit? = null
-        private val BASE_URL = "https://openapi.naver.com/v1/search/"
+        private val BASE_URL = "https://naveropenapi.apigw.ntruss.com/"
 
-        fun getRetrofit(context : Context): Retrofit {
+        fun getRetrofit(): Retrofit {
 
-            val naverClientId = "Nn1NEDxOmKq1F9QTs0ZG"
-            val naverClientSecret = "NGdETq1gha"
+            val naverMapClientId = "8e7qal9zm6"
+            val naverMapClientSecret = "kKtHVnK7AJqXDohMS8H0aeTIOPghVr7REXPo3y6C"
 
             val interceptor = Interceptor {
                 with(it) {
                     val newRequest = request().newBuilder()
-                        .addHeader("X-Naver-Client-Id", naverClientId)
-                        .addHeader("X-Naver-Client-Secret", naverClientSecret)
+                        .addHeader("X-NCP-APIGW-API-KEY-ID", naverMapClientId)
+                        .addHeader("X-NCP-APIGW-API-KEY", naverMapClientSecret)
                         .build()
                     proceed(newRequest)
                 }
@@ -35,7 +34,6 @@ class ServerAPI {
                 retrofit = Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .client(myClient)
-                    .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
             }
@@ -45,5 +43,4 @@ class ServerAPI {
         }
 
     }
-
 }

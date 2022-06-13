@@ -3,15 +3,14 @@ package com.neppplus.navermaptest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.naver.maps.map.MapView
+import com.neppplus.navermaptest.Models.PlaceData
+import com.neppplus.navermaptest.Models.SearchResponse
 import com.neppplus.navermaptest.databinding.ActivityMainBinding
 import com.neppplus.navermaptest.naver.APIList
-import com.neppplus.navermaptest.naver.ServerAPI
-import org.json.JSONObject
+import com.neppplus.navermaptest.naver.NaverServerAPI
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
 
-        val retrofit = ServerAPI.getRetrofit(this)
+        val retrofit = NaverServerAPI.getRetrofit()
         val apiList = retrofit.create(APIList::class.java)
 
         mPlaceAdapter = PlaceRecyclerViewAdapter(this, mPlaceList)
